@@ -900,7 +900,7 @@
       for (const r of rolls) {
         const val = document.getElementById(r.id).value.trim().toUpperCase();
         if (!isNirmaRoll(val)) {
-          alert("Invalid roll number format for: " + r.label + "\nExpected like 22BCM016 or 25MBA422.");
+          alert("Invalid roll number format for: " + r.label + "\nExpected like 22BCM016 or 25MBA427.");
           document.getElementById(r.id).focus();
           return;
         }
@@ -953,3 +953,4 @@
 
 </body>
 </html>
+
