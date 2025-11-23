@@ -12,14 +12,12 @@
 
   <!-- CSS -->
   <style>
-    /* RESET */
     * {
       margin: 0;
       box-sizing: border-box;
       transition: 0.4s;
     }
 
-    /* THEME VARIABLES */
     :root {
       --primary-color: #e50914;
       --primary-color-contrast: #ffffff;
@@ -63,20 +61,14 @@
       line-height: 1.1;
     }
 
-    h2 {
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-    }
-
-    h3 {
-      font-size: clamp(1.3rem, 3.5vw, 1.8rem);
-    }
+    h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); }
+    h3 { font-size: clamp(1.3rem, 3.5vw, 1.8rem); }
 
     p {
       font-size: clamp(0.9rem, 2.6vw, 1rem);
       line-height: 1.6;
     }
 
-    /* HEADER */
     header {
       background: var(--header-background-color);
       padding: 40px 18px 56px;
@@ -92,12 +84,7 @@
 
     header img {
       width: min(230px, 60vw);
-      margin-bottom: 16px;
-    }
-
-    header p {
-      max-width: 580px;
-      margin: 0 auto 18px;
+      margin-bottom: 150px;
     }
 
     .world-characters {
@@ -109,7 +96,6 @@
       pointer-events: none;
     }
 
-    /* visible background PNGs */
     #top-characters {
       bottom: -5px;
       height: 220px;
@@ -130,7 +116,6 @@
       opacity: 0.85;
     }
 
-    /* BUTTON (for Register Team only now) */
     button {
       padding: 10px 20px;
       background: transparent;
@@ -153,10 +138,7 @@
       color: #fff;
     }
 
-    /* MAIN LAYOUT */
-    main {
-      position: relative;
-    }
+    main { position: relative; }
 
     .container {
       padding: 56px 18px;
@@ -165,11 +147,8 @@
       position: relative;
     }
 
-    .container + .container {
-      padding-top: 32px;
-    }
+    .container + .container { padding-top: 32px; }
 
-    /* hero image centered & smaller */
     .hero-image {
       width: min(320px, 80%);
       margin: 24px auto 0;
@@ -178,7 +157,6 @@
       display: block;
     }
 
-    /* FORM */
     form {
       margin-top: 18px;
       display: grid;
@@ -205,9 +183,7 @@
       color: rgba(245, 230, 230, 0.9);
     }
 
-    .field {
-      width: 100%;
-    }
+    .field { width: 100%; }
 
     .inline-row {
       display: flex;
@@ -243,7 +219,6 @@
       transform: translateY(-1px);
     }
 
-    /* small Hawkins team visual in Team Details block */
     .team-visual {
       width: 120px;
       margin: 6px auto 10px;
@@ -253,7 +228,6 @@
       box-shadow: 0 0 14px rgba(229, 9, 20, 0.4);
     }
 
-    /* TEAM NAME box */
     .team-name-wrapper {
       padding: 10px;
       border-radius: 14px;
@@ -305,7 +279,6 @@
       max-width: 260px;
     }
 
-    /* GLOWING DATE BLOCK */
     .event-highlight {
       margin-top: 14px;
       margin-bottom: 10px;
@@ -374,11 +347,14 @@
       line-height: 1.5;
     }
 
-    .loop-note strong {
-      color: #fff;
-    }
+    .loop-note strong { color: #fff; }
 
-    /* FOOTER */
+    .loop-note a {
+      color: #ff9f0a;
+      text-decoration: none;
+    }
+    .loop-note a:hover { text-decoration: underline; }
+
     footer {
       padding: 28px 18px 36px;
       text-align: center;
@@ -397,7 +373,6 @@
       margin-top: 16px;
     }
 
-    /* DARK THEME TYPO */
     .dark-theme button,
     .dark-theme h1,
     .dark-theme h2,
@@ -406,7 +381,134 @@
       font-weight: normal;
     }
 
-    /* RESPONSIVE */
+    .ack-overlay {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, rgba(229, 9, 20, 0.25), rgba(0, 0, 0, 0.96));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .ack-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ack-box {
+      max-width: 420px;
+      padding: 24px 20px 26px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top, #180000, #000000 70%);
+      border: 1px solid rgba(229, 9, 20, 0.9);
+      box-shadow:
+        0 0 24px rgba(229, 9, 20, 0.9),
+        0 0 60px rgba(0, 0, 0, 1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ack-title {
+      font-family: "Rubik Glitch", system-ui;
+      text-transform: uppercase;
+      color: #e50914;
+      font-size: clamp(1.7rem, 5vw, 2.4rem);
+      letter-spacing: 0.2em;
+      text-shadow:
+        0 0 6px rgba(229, 9, 20, 1),
+        0 0 18px rgba(229, 9, 20, 0.9),
+        0 0 36px rgba(0, 0, 0, 1);
+      animation: flicker 2.3s infinite alternate;
+    }
+
+    .ack-sub {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.6;
+    }
+
+    .ack-close-link {
+      margin-top: 18px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #f5f5f5;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .ack-close-link:hover {
+      background: #25d366;
+      border-color: #25d366;
+      color: #000000;
+      box-shadow: 0 0 18px rgba(37, 211, 102, 0.9);
+    }
+
+    .ack-scanline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.7),
+        transparent
+      );
+      opacity: 0.4;
+      animation: scan 3.4s linear infinite;
+    }
+
+    @keyframes flicker {
+      0% {
+        opacity: 0.9;
+        text-shadow:
+          0 0 4px rgba(229, 9, 20, 0.7),
+          0 0 10px rgba(229, 9, 20, 0.5);
+        transform: translateY(0);
+      }
+      20% {
+        opacity: 0.4;
+        transform: translateY(-1px);
+      }
+      40% {
+        opacity: 1;
+        transform: translateY(1px);
+      }
+      60% {
+        opacity: 0.6;
+      }
+      80% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0.85;
+        text-shadow:
+          0 0 8px rgba(229, 9, 20, 1),
+          0 0 24px rgba(229, 9, 20, 0.9);
+      }
+    }
+
+    @keyframes scan {
+      0%   { top: 0%; }
+      100% { top: 100%; }
+    }
+
     @media (min-width: 640px) {
       header {
         padding: 48px 24px 70px;
@@ -480,15 +582,13 @@
 
 <body class="light-theme">
 
-  <!-- MUSIC -->
   <audio id="music" loop>
     <source src="assets/audio/normal-world.mpeg" type="audio/mpeg">
   </audio>
 
-  <!-- HEADER -->
   <header>
     <div class="header-inner">
-      <img src="assets/banner/ignus-stranger-logo.png" alt="IGNUS 10 – Stranger Things Edition" style=" margin-bottom: 150px;">
+      <img src="assets/banner/ignus-stranger-logo.png" alt="IGNUS 10 – Stranger Things Edition">
     </div>
 
     <div id="top-characters" class="world-characters"></div>
@@ -497,7 +597,6 @@
   <main>
     <div id="bottom-characters" class="world-characters"></div>
 
-    <!-- INTRO SECTION -->
     <section class="container">
       <h2>Into the Upside Down</h2>
       <p>
@@ -513,7 +612,6 @@
       >
     </section>
 
-    <!-- REGISTRATION FORM -->
     <section class="container">
       <h2>IGNUS 10 – Event Registration | Clique – The IT &amp; Analytics Club</h2>
       <p>
@@ -523,7 +621,6 @@
         This year, we bring you a Stranger Things themed experience featuring interactive games and a thrilling strategy-based auction round.
       </p>
 
-      <!-- Glowing date + team size block -->
       <div class="event-highlight">
         <div class="event-date-label">📅 Event Dates</div>
         <div class="event-date-main">28–29 November</div>
@@ -534,16 +631,16 @@
         Please register your team details below. Ensure that all information is accurate.
       </p>
 
-      <form>
-        <!-- TEAM DETAILS -->
+      <!-- visible UI form -->
+      <form id="registrationForm">
         <div class="form-group">
           <div class="form-row-title">Team Details</div>
 
           <img src="assets/characters/hawkins-team.png" alt="Hawkins team" class="team-visual">
 
-          <!-- Team name – special glowing spectrum box -->
           <div class="team-name-wrapper">
             <input
+              id="teamName"
               type="text"
               class="team-name-input"
               placeholder="TEAM NAME"
@@ -551,75 +648,108 @@
             >
           </div>
 
-          <!-- Leader: name + roll in one line -->
           <div class="inline-row">
             <div class="field">
-              <input type="text" placeholder="Team Leader – Name" required>
+              <input id="leaderName" type="text" placeholder="Team Leader – Name" required>
             </div>
             <div class="field">
-              <input type="text" placeholder="Team Leader – Roll Number" required>
+              <input id="leaderRoll" type="text" placeholder="Team Leader – Roll Number" required>
             </div>
           </div>
 
-          <!-- Leader WhatsApp below -->
+          <!-- Nirma email -->
           <div class="field">
-            <input type="tel" placeholder="Team Leader – WhatsApp Number" required>
+            <input
+              id="leaderEmail"
+              type="email"
+              placeholder="Team Leader – Nirma Email (something@nirmauni.ac.in)"
+              required
+            >
           </div>
 
-          <small>Tip: Use the WhatsApp number where you actively check messages.</small>
+          <div class="field">
+            <input
+              id="leaderPhone"
+              type="tel"
+              placeholder="Team Leader – WhatsApp Number"
+              required
+              inputmode="numeric"
+              maxlength="10"
+            >
+          </div>
+
+          <small>Only Nirma students can register. Use your official Nirma email and roll number.</small>
         </div>
 
-        <!-- MEMBER 1 -->
         <div class="form-group">
           <div class="form-row-title">Member 1</div>
 
           <div class="inline-row">
             <div class="field">
-              <input type="text" placeholder="Member 1 – Name" required>
+              <input id="m1Name" type="text" placeholder="Member 1 – Name" required>
             </div>
             <div class="field">
-              <input type="text" placeholder="Member 1 – Roll Number" required>
+              <input id="m1Roll" type="text" placeholder="Member 1 – Roll Number" required>
             </div>
           </div>
 
           <div class="field">
-            <input type="tel" placeholder="Member 1 – WhatsApp Number" required>
+            <input
+              id="m1Phone"
+              type="tel"
+              placeholder="Member 1 – WhatsApp Number"
+              required
+              inputmode="numeric"
+              maxlength="10"
+            >
           </div>
         </div>
 
-        <!-- MEMBER 2 -->
         <div class="form-group">
           <div class="form-row-title">Member 2</div>
 
           <div class="inline-row">
             <div class="field">
-              <input type="text" placeholder="Member 2 – Name" required>
+              <input id="m2Name" type="text" placeholder="Member 2 – Name" required>
             </div>
             <div class="field">
-              <input type="text" placeholder="Member 2 – Roll Number" required>
+              <input id="m2Roll" type="text" placeholder="Member 2 – Roll Number" required>
             </div>
           </div>
 
           <div class="field">
-            <input type="tel" placeholder="Member 2 – WhatsApp Number" required>
+            <input
+              id="m2Phone"
+              type="tel"
+              placeholder="Member 2 – WhatsApp Number"
+              required
+              inputmode="numeric"
+              maxlength="10"
+            >
           </div>
         </div>
 
-        <!-- MEMBER 3 -->
         <div class="form-group">
           <div class="form-row-title">Member 3</div>
 
           <div class="inline-row">
             <div class="field">
-              <input type="text" placeholder="Member 3 – Name" required>
+              <input id="m3Name" type="text" placeholder="Member 3 – Name" required>
             </div>
             <div class="field">
-              <input type="text" placeholder="Member 3 – Roll Number" required>
+              <input id="m3Roll" type="text" placeholder="Member 3 – Roll Number" required>
             </div>
           </div>
 
           <div class="field">
-            <input type="tel" placeholder="Member 3 – WhatsApp Number" required>
+            <input
+              id="m3Phone"
+              type="tel"
+              placeholder="Member 3 – WhatsApp Number"
+              required
+              inputmode="numeric"
+              maxlength="10"
+            >
           </div>
         </div>
 
@@ -631,7 +761,10 @@
       <div class="loop-note">
         <strong>Stay in the loop!</strong><br>
         Team leaders must join the WhatsApp group for all event updates, announcements, and round details.<br>
-        Join here :<br>
+        Join here :
+        <a href="https://chat.whatsapp.com/J1aWIitPi3h7pASJG3G509" target="_blank" rel="noopener">
+          Official IGNUS 10 WhatsApp Group
+        </a><br>
         Gear up—see you soon in the world of Stranger Things!
       </div>
     </section>
@@ -645,25 +778,74 @@
     <img src="assets/footer/SVG Transparent.svg" alt="Clique – The IT &amp; Analytics Club">
   </footer>
 
-  <!-- JS -->
+  <!-- hidden Google Form POST -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+  <form
+    id="gForm"
+    action="https://docs.google.com/forms/d/e/1FAIpQLSd7vegZWzX6jineQxYsn8jVTWMHDonzG0Sm3ccpDmKduuLP4A/formResponse"
+    method="POST"
+    target="hidden_iframe"
+    style="display:none;"
+  >
+    <!-- entry IDs from your prefill link -->
+    <input type="hidden" name="entry.1658292126" id="g-teamName">
+    <input type="hidden" name="entry.649612859"  id="g-leaderName">
+    <input type="hidden" name="entry.311406819"  id="g-leaderRoll">
+    <input type="hidden" name="entry.1610777173" id="g-leaderPhone">
+
+    <input type="hidden" name="entry.944721267"  id="g-m1Name">
+    <input type="hidden" name="entry.946854012"  id="g-m1Roll">
+    <input type="hidden" name="entry.669563409"  id="g-m1Phone">
+
+    <input type="hidden" name="entry.1649075460" id="g-m2Name">
+    <input type="hidden" name="entry.1851987914" id="g-m2Roll">
+    <input type="hidden" name="entry.708769153"  id="g-m2Phone">
+
+    <input type="hidden" name="entry.1192084488" id="g-m3Name">
+    <input type="hidden" name="entry.613836858"  id="g-m3Roll">
+    <input type="hidden" name="entry.1510492368" id="g-m3Phone">
+  </form>
+
+  <!-- haunted acknowledgement -->
+  <div id="ackOverlay" class="ack-overlay">
+    <div class="ack-box">
+      <div class="ack-scanline"></div>
+      <div class="ack-title">See you on the other side</div>
+      <p class="ack-sub">
+        Your registration has crossed the gate.<br>
+        Step into the comms channel of Hawkins and the Upside Down.
+      </p>
+      <a
+        href="https://chat.whatsapp.com/J1aWIitPi3h7pASJG3G509"
+        target="_blank"
+        rel="noopener"
+        class="ack-close-link"
+      >
+        Join WhatsApp
+      </a>
+    </div>
+  </div>
+
   <script>
     let lastScroll = 0;
 
-    // Start music on first interaction (mobile-friendly)
+    const audio   = document.getElementById("music");
+    const overlay = document.getElementById("ackOverlay");
+    const form    = document.getElementById("registrationForm");
+
     window.addEventListener("click", () => {
-      const audio = document.getElementById("music");
       if (audio.paused) {
         audio.play().catch(() => {});
         audio.volume = 0.2;
       }
     });
 
-    // Change world by scrolling: down -> Upside Down, up -> Normal
     window.addEventListener("scroll", () => {
-      const current = window.scrollY;
-      const audio = document.getElementById("music");
+      if (overlay.classList.contains("visible")) return;
 
-      // Scroll down enough -> Upside Down World
+      const current = window.scrollY;
+
       if (current > lastScroll + 20) {
         document.body.classList.add("dark-theme");
         document.body.classList.remove("light-theme");
@@ -672,7 +854,6 @@
         audio.volume = 0.25;
       }
 
-      // Scroll up enough -> Normal World
       if (current < lastScroll - 20) {
         document.body.classList.add("light-theme");
         document.body.classList.remove("dark-theme");
@@ -683,9 +864,92 @@
 
       lastScroll = current;
     });
+
+    function isValidTenDigits(value) {
+      return /^\d{10}$/.test(value);
+    }
+
+    function isNirmaEmail(value) {
+      return /^[a-zA-Z0-9._%+-]+@nirmauni\.ac\.in$/i.test(value);
+    }
+
+    // Simple Nirma roll pattern: 2 digits + 3 letters + 3 digits (e.g., 22BCM016, 25MBA422)
+    function isNirmaRoll(value) {
+      return /^\d{2}[a-zA-Z]{3}\d{3}$/.test(value.trim());
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // email check
+      const email = document.getElementById("leaderEmail").value.trim();
+      if (!isNirmaEmail(email)) {
+        alert("Only Nirma students can register.\nPlease enter a valid Nirma email (something@nirmauni.ac.in).");
+        document.getElementById("leaderEmail").focus();
+        return;
+      }
+
+      // roll checks
+      const rolls = [
+        { id: "leaderRoll", label: "Team Leader – Roll Number" },
+        { id: "m1Roll",     label: "Member 1 – Roll Number" },
+        { id: "m2Roll",     label: "Member 2 – Roll Number" },
+        { id: "m3Roll",     label: "Member 3 – Roll Number" }
+      ];
+
+      for (const r of rolls) {
+        const val = document.getElementById(r.id).value.trim().toUpperCase();
+        if (!isNirmaRoll(val)) {
+          alert("Invalid roll number format for: " + r.label + "\nExpected like 22BCM016 or 25MBA422.");
+          document.getElementById(r.id).focus();
+          return;
+        }
+        // normalise to upper-case in visible input too
+        document.getElementById(r.id).value = val;
+      }
+
+      // phone checks
+      const phoneInputs = form.querySelectorAll('input[type="tel"]');
+      for (const input of phoneInputs) {
+        const val = input.value.trim();
+        if (!isValidTenDigits(val)) {
+          alert("Please enter a valid 10-digit WhatsApp number for: " + input.placeholder);
+          input.focus();
+          return;
+        }
+      }
+
+      // copy values to hidden Google Form fields
+      document.getElementById("g-teamName").value   = document.getElementById("teamName").value.trim();
+      document.getElementById("g-leaderName").value = document.getElementById("leaderName").value.trim();
+      document.getElementById("g-leaderRoll").value = document.getElementById("leaderRoll").value.trim();
+      document.getElementById("g-leaderPhone").value= document.getElementById("leaderPhone").value.trim();
+
+      document.getElementById("g-m1Name").value     = document.getElementById("m1Name").value.trim();
+      document.getElementById("g-m1Roll").value     = document.getElementById("m1Roll").value.trim();
+      document.getElementById("g-m1Phone").value    = document.getElementById("m1Phone").value.trim();
+
+      document.getElementById("g-m2Name").value     = document.getElementById("m2Name").value.trim();
+      document.getElementById("g-m2Roll").value     = document.getElementById("m2Roll").value.trim();
+      document.getElementById("g-m2Phone").value    = document.getElementById("m2Phone").value.trim();
+
+      document.getElementById("g-m3Name").value     = document.getElementById("m3Name").value.trim();
+      document.getElementById("g-m3Roll").value     = document.getElementById("m3Roll").value.trim();
+      document.getElementById("g-m3Phone").value    = document.getElementById("m3Phone").value.trim();
+
+      // submit into Google Form – responses go to your sheet
+      document.getElementById("gForm").submit();
+
+      document.body.classList.add("dark-theme");
+      document.body.classList.remove("light-theme");
+      audio.src = "assets/audio/inverted-world.mpeg";
+      audio.play().catch(() => {});
+      audio.volume = 0.3;
+
+      overlay.classList.add("visible");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   </script>
 
 </body>
 </html>
-
-
