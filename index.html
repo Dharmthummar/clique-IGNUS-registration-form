@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- META -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IGNUS 10 – Into the Upside Down</title>
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Libre+Baskerville&family=Rubik+Glitch&display=swap">
+
+  <!-- CSS -->
+  <style>
+    /* RESET */
+    * {
+      margin: 0;
+      box-sizing: border-box;
+      transition: 0.4s;
+    }
+
+    /* THEME VARIABLES */
+    :root {
+      --primary-color: #e50914;
+      --primary-color-contrast: #ffffff;
+      --field-background-color: #050509;
+    }
+
+    .light-theme {
+      --page-background: radial-gradient(circle at top, #260000, #120308 35%, #050509);
+      --header-background-color: #1b0b0b;
+      --highlight-color: #f5e6e6;
+      --featured-font-family: "Archivo", sans-serif;
+      --character-top-image-src: url("assets/characters/hawkins-team.png");
+      --character-bottom-image-src: url("assets/characters/upsidedown-creature.png");
+      --footer-background-color: #130607;
+    }
+
+    .dark-theme {
+      --page-background: radial-gradient(circle at top, #000000, #050006 40%, #020103 70%, #000000);
+      --header-background-color: #050003;
+      --highlight-color: #ffffff;
+      --featured-font-family: "Rubik Glitch", sans-serif;
+      --character-bottom-image-src: url("assets/characters/hawkins-team.png");
+      --character-top-image-src: url("assets/characters/upsidedown-creature.png");
+      --footer-background-color: #000000;
+    }
+
+    body {
+      background: var(--page-background);
+      font-family: "Libre Baskerville", serif;
+      color: var(--highlight-color);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--featured-font-family);
+      color: var(--primary-color);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+      line-height: 1.1;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+    }
+
+    h3 {
+      font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+    }
+
+    p {
+      font-size: clamp(0.9rem, 2.6vw, 1rem);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--header-background-color);
+      padding: 40px 18px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header img {
+      width: min(230px, 60vw);
+      margin-bottom: 16px;
+    }
+
+    header p {
+      max-width: 580px;
+      margin: 0 auto 18px;
+    }
+
+    .world-characters {
+      width: 100%;
+      max-width: 1000px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    /* visible background PNGs */
+    #top-characters {
+      bottom: -5px;
+      height: 220px;
+      background-image: var(--character-top-image-src);
+      background-repeat: no-repeat;
+      background-position: bottom center;
+      background-size: contain;
+    }
+
+    #bottom-characters {
+      height: 420px;
+      top: -5px;
+      background-image: var(--character-bottom-image-src);
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: contain;
+      transform: rotateX(180deg);
+      opacity: 0.85;
+    }
+
+    /* BUTTON (for Register Team only now) */
+    button {
+      padding: 10px 20px;
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      font-size: 0.85rem;
+      font-family: var(--featured-font-family);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-radius: 999px;
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button:hover {
+      background: var(--primary-color);
+      color: #fff;
+    }
+
+    /* MAIN LAYOUT */
+    main {
+      position: relative;
+    }
+
+    .container {
+      padding: 56px 18px;
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .container + .container {
+      padding-top: 32px;
+    }
+
+    /* hero image centered & smaller */
+    .hero-image {
+      width: min(320px, 80%);
+      margin: 24px auto 0;
+      border-radius: 10px;
+      border: 2px solid rgba(229, 9, 20, 0.8);
+      display: block;
+    }
+
+    /* FORM */
+    form {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 10px 12px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .form-row-title {
+      margin-bottom: 2px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(245, 230, 230, 0.9);
+    }
+
+    .field {
+      width: 100%;
+    }
+
+    .inline-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .inline-row .field {
+      flex: 1 1 min(180px, 100%);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px 4px;
+      border-radius: 0;
+      border: none;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+      background: transparent;
+      color: #fff;
+      font-family: "Libre Baskerville", serif;
+      font-size: 0.9rem;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    input:focus-visible, textarea:focus-visible {
+      outline: none;
+      border-bottom-color: #ff5260;
+      box-shadow: 0 10px 25px -14px rgba(229, 9, 20, 0.9);
+      transform: translateY(-1px);
+    }
+
+    /* small Hawkins team visual in Team Details block */
+    .team-visual {
+      width: 120px;
+      margin: 6px auto 10px;
+      display: block;
+      border-radius: 8px;
+      border: 1px solid rgba(229, 9, 20, 0.7);
+      box-shadow: 0 0 14px rgba(229, 9, 20, 0.4);
+    }
+
+    /* TEAM NAME box */
+    .team-name-wrapper {
+      padding: 10px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, rgba(229, 9, 20, 0.28), rgba(0, 0, 0, 0.95));
+      margin-bottom: 4px;
+    }
+
+    .team-name-input {
+      border-radius: 10px !important;
+      border: 2px solid transparent !important;
+      padding: 12px 14px;
+      background:
+        linear-gradient(#050509, #050509) padding-box,
+        linear-gradient(120deg, #e50914, #ff9f0a, #4b6bff, #e50914) border-box;
+      box-shadow: 0 0 12px rgba(229, 9, 20, 0.45);
+      font-size: 1rem;
+    }
+
+    .team-name-input::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    .team-name-input:focus-visible {
+      outline: none;
+      border: 2px solid transparent;
+      box-shadow:
+        0 0 25px rgba(229, 9, 20, 0.95),
+        0 0 40px rgba(255, 159, 10, 0.55);
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    .form-group small {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .submit-wrapper {
+      margin-top: 12px;
+      display: flex;
+      justify-content: flex-start;
+      grid-column: 1 / -1;
+    }
+
+    .submit-wrapper button {
+      width: 100%;
+      max-width: 260px;
+    }
+
+    /* GLOWING DATE BLOCK */
+    .event-highlight {
+      margin-top: 14px;
+      margin-bottom: 10px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at top, rgba(229, 9, 20, 0.25), rgba(0, 0, 0, 0.95));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-align: center;
+      box-shadow:
+        0 0 18px rgba(229, 9, 20, 0.5),
+        0 0 36px rgba(229, 9, 20, 0.25);
+    }
+
+    .event-date-label {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 4px;
+    }
+
+    .event-date-main {
+      font-family: var(--featured-font-family);
+      font-size: clamp(1.4rem, 4.4vw, 2rem);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow:
+        0 0 6px rgba(229, 9, 20, 0.9),
+        0 0 16px rgba(229, 9, 20, 0.85),
+        0 0 30px rgba(229, 9, 20, 0.6);
+      animation: dateGlow 2.4s ease-in-out infinite alternate;
+    }
+
+    .event-team {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: 0.05em;
+    }
+
+    @keyframes dateGlow {
+      0% {
+        text-shadow:
+          0 0 4px rgba(229, 9, 20, 0.6),
+          0 0 10px rgba(229, 9, 20, 0.4);
+        transform: scale(1);
+      }
+      100% {
+        text-shadow:
+          0 0 10px rgba(229, 9, 20, 1),
+          0 0 26px rgba(229, 9, 20, 0.9),
+          0 0 40px rgba(229, 9, 20, 0.8);
+        transform: scale(1.03);
+      }
+    }
+
+    .loop-note {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px dashed rgba(255, 255, 255, 0.25);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .loop-note strong {
+      color: #fff;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 28px 18px 36px;
+      text-align: center;
+      background: var(--footer-background-color);
+      margin-top: 40px;
+    }
+
+    footer p {
+      max-width: 640px;
+      margin: 0 auto;
+      font-size: 0.85rem;
+    }
+
+    footer img {
+      width: min(180px, 48vw);
+      margin-top: 16px;
+    }
+
+    /* DARK THEME TYPO */
+    .dark-theme button,
+    .dark-theme h1,
+    .dark-theme h2,
+    .dark-theme h3 {
+      letter-spacing: 4px;
+      font-weight: normal;
+    }
+
+    /* RESPONSIVE */
+    @media (min-width: 640px) {
+      header {
+        padding: 48px 24px 70px;
+      }
+
+      .container {
+        padding: 64px 24px;
+      }
+
+      form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 16px;
+      }
+
+      .form-group {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (min-width: 960px) {
+      header {
+        padding: 56px 32px 80px;
+      }
+
+      .container {
+        padding: 72px 32px;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      #top-characters,
+      #bottom-characters {
+        display: none;
+      }
+
+      header {
+        padding: 28px 14px 32px;
+      }
+
+      header p {
+        font-size: 0.85rem;
+      }
+
+      button {
+        width: 100%;
+        max-width: 260px;
+      }
+
+      .container {
+        padding: 40px 14px;
+      }
+
+      .hero-image {
+        margin-top: 18px;
+      }
+
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      .submit-wrapper {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body class="light-theme">
+
+  <!-- MUSIC -->
+  <audio id="music" loop>
+    <source src="assets/audio/normal-world.mpeg" type="audio/mpeg">
+  </audio>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <img src="assets/banner/ignus-stranger-logo.png" alt="IGNUS 10 – Stranger Things Edition" style=" margin-bottom: 150px;">
+    </div>
+
+    <div id="top-characters" class="world-characters"></div>
+  </header>
+
+  <main>
+    <div id="bottom-characters" class="world-characters"></div>
+
+    <!-- INTRO SECTION -->
+    <section class="container">
+      <h2>Into the Upside Down</h2>
+      <p>
+        A Stranger Things–inspired red and black world, designed for IGNUS 10.
+        Strategy, mystery, and a touch of the Upside Down—your choices decide
+        whether your team survives Hawkins.
+      </p>
+
+      <img
+        src="assets/content/ignus-upsidedown.png"
+        alt="Hawkins town with an Upside Down overlay in red and black theme"
+        class="hero-image"
+      >
+    </section>
+
+    <!-- REGISTRATION FORM -->
+    <section class="container">
+      <h2>IGNUS 10 – Event Registration | Clique – The IT &amp; Analytics Club</h2>
+      <p>
+        Welcome to IGNUS 10, the flagship event of Clique – The IT &amp; Analytics Club!
+      </p>
+      <p style="margin-top:8px;">
+        This year, we bring you a Stranger Things themed experience featuring interactive games and a thrilling strategy-based auction round.
+      </p>
+
+      <!-- Glowing date + team size block -->
+      <div class="event-highlight">
+        <div class="event-date-label">📅 Event Dates</div>
+        <div class="event-date-main">28–29 November</div>
+        <div class="event-team">👥 Team Size: 4 Members</div>
+      </div>
+
+      <p style="margin-top:8px;">
+        Please register your team details below. Ensure that all information is accurate.
+      </p>
+
+      <form>
+        <!-- TEAM DETAILS -->
+        <div class="form-group">
+          <div class="form-row-title">Team Details</div>
+
+          <img src="assets/characters/hawkins-team.png" alt="Hawkins team" class="team-visual">
+
+          <!-- Team name – special glowing spectrum box -->
+          <div class="team-name-wrapper">
+            <input
+              type="text"
+              class="team-name-input"
+              placeholder="TEAM NAME"
+              required
+            >
+          </div>
+
+          <!-- Leader: name + roll in one line -->
+          <div class="inline-row">
+            <div class="field">
+              <input type="text" placeholder="Team Leader – Name" required>
+            </div>
+            <div class="field">
+              <input type="text" placeholder="Team Leader – Roll Number" required>
+            </div>
+          </div>
+
+          <!-- Leader WhatsApp below -->
+          <div class="field">
+            <input type="tel" placeholder="Team Leader – WhatsApp Number" required>
+          </div>
+
+          <small>Tip: Use the WhatsApp number where you actively check messages.</small>
+        </div>
+
+        <!-- MEMBER 1 -->
+        <div class="form-group">
+          <div class="form-row-title">Member 1</div>
+
+          <div class="inline-row">
+            <div class="field">
+              <input type="text" placeholder="Member 1 – Name" required>
+            </div>
+            <div class="field">
+              <input type="text" placeholder="Member 1 – Roll Number" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="tel" placeholder="Member 1 – WhatsApp Number" required>
+          </div>
+        </div>
+
+        <!-- MEMBER 2 -->
+        <div class="form-group">
+          <div class="form-row-title">Member 2</div>
+
+          <div class="inline-row">
+            <div class="field">
+              <input type="text" placeholder="Member 2 – Name" required>
+            </div>
+            <div class="field">
+              <input type="text" placeholder="Member 2 – Roll Number" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="tel" placeholder="Member 2 – WhatsApp Number" required>
+          </div>
+        </div>
+
+        <!-- MEMBER 3 -->
+        <div class="form-group">
+          <div class="form-row-title">Member 3</div>
+
+          <div class="inline-row">
+            <div class="field">
+              <input type="text" placeholder="Member 3 – Name" required>
+            </div>
+            <div class="field">
+              <input type="text" placeholder="Member 3 – Roll Number" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="tel" placeholder="Member 3 – WhatsApp Number" required>
+          </div>
+        </div>
+
+        <div class="submit-wrapper">
+          <button type="submit">Register Team</button>
+        </div>
+      </form>
+
+      <div class="loop-note">
+        <strong>Stay in the loop!</strong><br>
+        Team leaders must join the WhatsApp group for all event updates, announcements, and round details.<br>
+        Join here :<br>
+        Gear up—see you soon in the world of Stranger Things!
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      IGNUS 10 · Stranger Things Edition · Organized by Clique – The IT &amp; Analytics Club.
+      Step carefully. The gate to the Upside Down is now open.
+    </p>
+    <img src="assets/footer/SVG Transparent.svg" alt="Clique – The IT &amp; Analytics Club">
+  </footer>
+
+  <!-- JS -->
+  <script>
+    let lastScroll = 0;
+
+    // Start music on first interaction (mobile-friendly)
+    window.addEventListener("click", () => {
+      const audio = document.getElementById("music");
+      if (audio.paused) {
+        audio.play().catch(() => {});
+        audio.volume = 0.2;
+      }
+    });
+
+    // Change world by scrolling: down -> Upside Down, up -> Normal
+    window.addEventListener("scroll", () => {
+      const current = window.scrollY;
+      const audio = document.getElementById("music");
+
+      // Scroll down enough -> Upside Down World
+      if (current > lastScroll + 20) {
+        document.body.classList.add("dark-theme");
+        document.body.classList.remove("light-theme");
+        audio.src = "assets/audio/inverted-world.mpeg";
+        audio.play().catch(() => {});
+        audio.volume = 0.25;
+      }
+
+      // Scroll up enough -> Normal World
+      if (current < lastScroll - 20) {
+        document.body.classList.add("light-theme");
+        document.body.classList.remove("dark-theme");
+        audio.src = "assets/audio/normal-world.mpeg";
+        audio.play().catch(() => {});
+        audio.volume = 0.2;
+      }
+
+      lastScroll = current;
+    });
+  </script>
+
+</body>
+</html>
