@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <!-- META -->
@@ -778,33 +778,34 @@
     <img src="assets/footer/SVG Transparent.svg" alt="Clique – The IT &amp; Analytics Club">
   </footer>
 
-  <!-- hidden Google Form POST -->
+  <!-- hidden Google Form POST → NEW FORM -->
   <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
   <form
     id="gForm"
-    action="https://docs.google.com/forms/d/e/1FAIpQLSd7vegZWzX6jineQxYsn8jVTWMHDonzG0Sm3ccpDmKduuLP4A/formResponse"
+    action="https://docs.google.com/forms/d/e/1FAIpQLSfVmB51vYu6Of9MoFRBNf8iwM5sYjDGlOhkQdd5ftDSE66Cgg/formResponse"
     method="POST"
     target="hidden_iframe"
     style="display:none;"
   >
-    <!-- entry IDs from your prefill link -->
-    <input type="hidden" name="entry.1658292126" id="g-teamName">
-    <input type="hidden" name="entry.649612859"  id="g-leaderName">
-    <input type="hidden" name="entry.311406819"  id="g-leaderRoll">
-    <input type="hidden" name="entry.1610777173" id="g-leaderPhone">
+    <!-- NEW entry IDs from your prefill link -->
+    <input type="hidden" name="entry.649653946"  id="g-teamName">
 
-    <input type="hidden" name="entry.944721267"  id="g-m1Name">
-    <input type="hidden" name="entry.946854012"  id="g-m1Roll">
-    <input type="hidden" name="entry.669563409"  id="g-m1Phone">
+    <input type="hidden" name="entry.989176562"   id="g-leaderName">
+    <input type="hidden" name="entry.1473210307"  id="g-leaderRoll">
+    <input type="hidden" name="entry.801351635"   id="g-leaderPhone">
 
-    <input type="hidden" name="entry.1649075460" id="g-m2Name">
-    <input type="hidden" name="entry.1851987914" id="g-m2Roll">
-    <input type="hidden" name="entry.708769153"  id="g-m2Phone">
+    <input type="hidden" name="entry.267321343"   id="g-m1Name">
+    <input type="hidden" name="entry.22448450"    id="g-m1Roll">
+    <input type="hidden" name="entry.325630845"   id="g-m1Phone">
 
-    <input type="hidden" name="entry.1192084488" id="g-m3Name">
-    <input type="hidden" name="entry.613836858"  id="g-m3Roll">
-    <input type="hidden" name="entry.1510492368" id="g-m3Phone">
+    <input type="hidden" name="entry.1255328455"  id="g-m2Name">
+    <input type="hidden" name="entry.1576521186"  id="g-m2Roll">
+    <input type="hidden" name="entry.379938482"   id="g-m2Phone">
+
+    <input type="hidden" name="entry.706378246"   id="g-m3Name">
+    <input type="hidden" name="entry.461757338"   id="g-m3Roll">
+    <input type="hidden" name="entry.1074475054"  id="g-m3Phone">
   </form>
 
   <!-- haunted acknowledgement -->
@@ -834,13 +835,16 @@
     const overlay = document.getElementById("ackOverlay");
     const form    = document.getElementById("registrationForm");
 
+    // start music once on first click, loop forever until user stops via browser controls
     window.addEventListener("click", () => {
       if (audio.paused) {
-        audio.play().catch(() => {});
+        audio.loop = true;
         audio.volume = 0.2;
+        audio.play().catch(() => {});
       }
     });
 
+    // scroll only changes theme, not music
     window.addEventListener("scroll", () => {
       if (overlay.classList.contains("visible")) return;
 
@@ -849,17 +853,11 @@
       if (current > lastScroll + 20) {
         document.body.classList.add("dark-theme");
         document.body.classList.remove("light-theme");
-        audio.src = "assets/audio/inverted-world.mpeg";
-        audio.play().catch(() => {});
-        audio.volume = 0.25;
       }
 
       if (current < lastScroll - 20) {
         document.body.classList.add("light-theme");
         document.body.classList.remove("dark-theme");
-        audio.src = "assets/audio/normal-world.mpeg";
-        audio.play().catch(() => {});
-        audio.volume = 0.2;
       }
 
       lastScroll = current;
@@ -873,7 +871,7 @@
       return /^[a-zA-Z0-9._%+-]+@nirmauni\.ac\.in$/i.test(value);
     }
 
-    // Simple Nirma roll pattern: 2 digits + 3 letters + 3 digits (e.g., 22BCM016, 25MBA422)
+    // 2 digits + 3 letters + 3 digits (e.g., 22BCM016, 25MBA422)
     function isNirmaRoll(value) {
       return /^\d{2}[a-zA-Z]{3}\d{3}$/.test(value.trim());
     }
@@ -881,7 +879,6 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      // email check
       const email = document.getElementById("leaderEmail").value.trim();
       if (!isNirmaEmail(email)) {
         alert("Only Nirma students can register.\nPlease enter a valid Nirma email (something@nirmauni.ac.in).");
@@ -889,7 +886,6 @@
         return;
       }
 
-      // roll checks
       const rolls = [
         { id: "leaderRoll", label: "Team Leader – Roll Number" },
         { id: "m1Roll",     label: "Member 1 – Roll Number" },
@@ -900,15 +896,13 @@
       for (const r of rolls) {
         const val = document.getElementById(r.id).value.trim().toUpperCase();
         if (!isNirmaRoll(val)) {
-          alert("Invalid roll number format for: " + r.label + "\nExpected like 22BCM016 or 25MBA427.");
+          alert("Invalid roll number format for: " + r.label + "\nUse format like 22BCM016 or 25MBA427.");
           document.getElementById(r.id).focus();
           return;
         }
-        // normalise to upper-case in visible input too
         document.getElementById(r.id).value = val;
       }
 
-      // phone checks
       const phoneInputs = form.querySelectorAll('input[type="tel"]');
       for (const input of phoneInputs) {
         const val = input.value.trim();
@@ -920,31 +914,28 @@
       }
 
       // copy values to hidden Google Form fields
-      document.getElementById("g-teamName").value   = document.getElementById("teamName").value.trim();
-      document.getElementById("g-leaderName").value = document.getElementById("leaderName").value.trim();
-      document.getElementById("g-leaderRoll").value = document.getElementById("leaderRoll").value.trim();
-      document.getElementById("g-leaderPhone").value= document.getElementById("leaderPhone").value.trim();
+      document.getElementById("g-teamName").value    = document.getElementById("teamName").value.trim();
+      document.getElementById("g-leaderName").value  = document.getElementById("leaderName").value.trim();
+      document.getElementById("g-leaderRoll").value  = document.getElementById("leaderRoll").value.trim();
+      document.getElementById("g-leaderPhone").value = document.getElementById("leaderPhone").value.trim();
 
-      document.getElementById("g-m1Name").value     = document.getElementById("m1Name").value.trim();
-      document.getElementById("g-m1Roll").value     = document.getElementById("m1Roll").value.trim();
-      document.getElementById("g-m1Phone").value    = document.getElementById("m1Phone").value.trim();
+      document.getElementById("g-m1Name").value      = document.getElementById("m1Name").value.trim();
+      document.getElementById("g-m1Roll").value      = document.getElementById("m1Roll").value.trim();
+      document.getElementById("g-m1Phone").value     = document.getElementById("m1Phone").value.trim();
 
-      document.getElementById("g-m2Name").value     = document.getElementById("m2Name").value.trim();
-      document.getElementById("g-m2Roll").value     = document.getElementById("m2Roll").value.trim();
-      document.getElementById("g-m2Phone").value    = document.getElementById("m2Phone").value.trim();
+      document.getElementById("g-m2Name").value      = document.getElementById("m2Name").value.trim();
+      document.getElementById("g-m2Roll").value      = document.getElementById("m2Roll").value.trim();
+      document.getElementById("g-m2Phone").value     = document.getElementById("m2Phone").value.trim();
 
-      document.getElementById("g-m3Name").value     = document.getElementById("m3Name").value.trim();
-      document.getElementById("g-m3Roll").value     = document.getElementById("m3Roll").value.trim();
-      document.getElementById("g-m3Phone").value    = document.getElementById("m3Phone").value.trim();
+      document.getElementById("g-m3Name").value      = document.getElementById("m3Name").value.trim();
+      document.getElementById("g-m3Roll").value      = document.getElementById("m3Roll").value.trim();
+      document.getElementById("g-m3Phone").value     = document.getElementById("m3Phone").value.trim();
 
-      // submit into Google Form – responses go to your sheet
+      // submit into Google Form – responses go to your new sheet
       document.getElementById("gForm").submit();
 
       document.body.classList.add("dark-theme");
       document.body.classList.remove("light-theme");
-      audio.src = "assets/audio/inverted-world.mpeg";
-      audio.play().catch(() => {});
-      audio.volume = 0.3;
 
       overlay.classList.add("visible");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -953,4 +944,3 @@
 
 </body>
 </html>
-
